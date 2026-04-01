@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ronkies Food Mart & Emmy Enterprises</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#1e7a44;--gd:#155c32;--gl:#edf7f1;--gm:#d0ecdb;
+  --o:#c96a1e;--od:#9d4f12;--ol:#fef3ea;--om:#fce0c5;
+  --gold:#e8a020;--wa:#25d366;--red:#c0392b;
+  --ink:#111827;--ink2:#374151;--mu:#6b7280;--su:#9ca3af;
+  --bd:#e5e7eb;--bg:#f9fafb;--wh:#ffffff;
+  --cs:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --sh:0 4px 16px rgba(0,0,0,0.08);--shl:0 8px 32px rgba(0,0,0,0.12);
+  --r:12px;--rs:8px;--rx:6px}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+.nav{position:sticky;top:0;z-index:100;background:var(--wh);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:62px}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo-icon{width:38px;height:38px;border-radius:9px;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.logo-name{font-size:14px;font-weight:700;color:var(--ink);line-height:1.2}
+.logo-loc{font-size:11px;color:var(--mu)}
+.cart-btn{display:flex;align-items:center;gap:7px;background:var(--ink);color:var(--wh);border:none;border-radius:8px;padding:9px 15px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s}
+.cart-btn:hover{background:var(--ink2)}
+.cnum{background:var(--gold);color:var(--ink);border-radius:50px;min-width:20px;height:20px;font-size:11px;font-weight:700;padding:0 5px;display:inline-flex;align-items:center;justify-content:center}
+
+.hero{background:var(--gd);padding:44px 20px 40px;text-align:center}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:50px;padding:5px 14px;margin-bottom:16px;font-size:12px;color:rgba(255,255,255,.75)}
+.hero h1{font-size:clamp(24px,5.5vw,44px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.5px;margin-bottom:10px}
+.hero h1 .hi{color:var(--gold)}
+.hero-sub{color:rgba(255,255,255,.6);font-size:clamp(13px,2.5vw,15px);margin-bottom:22px}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:7px}
+.chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.72);border-radius:50px;padding:5px 13px;font-size:12px}
+.chip.hi{background:var(--wa);border-color:var(--wa);color:#fff;font-weight:600}
+
+.tabs{position:sticky;top:62px;z-index:90;background:var(--wh);border-bottom:1px solid var(--bd);display:flex;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:1;min-width:150px;padding:0 20px;height:50px;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-size:13px;font-weight:600;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;color:var(--mu);transition:all .18s;white-space:nowrap}
+.tab.af{color:var(--g);border-bottom-color:var(--g)}
+.tab.at{color:var(--o);border-bottom-color:var(--o)}
+
+.main{max-width:1140px;margin:0 auto;padding:26px 14px 100px}
+.sec{display:none;animation:up .28s ease}
+.sec.on{display:block}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.store-hd{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:22px;padding:18px 20px;border-radius:var(--r);border:1px solid var(--bd);background:var(--wh);box-shadow:var(--cs)}
+.shd-l{display:flex;align-items:center;gap:13px}
+.shd-icon{width:50px;height:50px;border-radius:var(--rs);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px}
+.shd-icon.fi{background:var(--gl)}.shd-icon.ti{background:var(--ol)}
+.shd-name{font-size:16px;font-weight:700;color:var(--ink)}
+.shd-desc{font-size:12px;color:var(--mu);margin-top:2px}
+.shd-stats{display:flex;gap:8px;flex-wrap:wrap}
+.sp{background:var(--bg);border:1px solid var(--bd);border-radius:var(--rx);padding:7px 14px;text-align:center}
+.sp strong{display:block;font-size:15px;font-weight:700;color:var(--ink)}
+.sp span{font-size:11px;color:var(--mu)}
+
+.sw{position:relative;margin-bottom:14px}
+.sw input{width:100%;padding:11px 16px 11px 42px;border:1px solid var(--bd);border-radius:50px;font-family:inherit;font-size:14px;background:var(--wh);outline:none;transition:border-color .18s,box-shadow .18s;color:var(--ink)}
+.sw input:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(30,122,68,.1)}
+.sw input.t:focus{border-color:var(--o);box-shadow:0 0 0 3px rgba(201,106,30,.1)}
+.si{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px}
+
+.filt{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}
+.pill{padding:6px 14px;border-radius:50px;border:1px solid var(--bd);background:var(--wh);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:all .14s;color:var(--mu)}
+.pill:hover{border-color:#d1d5db;color:var(--ink)}
+.pill.fa{background:var(--g);border-color:var(--g);color:#fff}
+.pill.ta{background:var(--o);border-color:var(--o);color:#fff}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:13px}
+@media(max-width:400px){.grid{grid-template-columns:repeat(2,1fr);gap:9px}}
+@media(min-width:900px){.grid{grid-template-columns:repeat(auto-fill,minmax(185px,1fr))}}
+
+.card{background:var(--wh);border-radius:var(--r);border:1px solid var(--bd);overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s,border-color .18s;box-shadow:var(--cs)}
+.card:hover{transform:translateY(-3px);box-shadow:var(--sh);border-color:#d1d5db}
+
+.thumb{height:112px;position:relative;display:flex;align-items:center;justify-content:center;font-size:48px;overflow:hidden}
+.tg{background:#f0f9e8}.tp{background:#fff0f0}.to{background:#fffbe6}
+.tv{background:#e8f8ed}.ts{background:#fff3ec}.td{background:#eef5ff}
+.tb{background:#fef9e8}.tpa{background:#fff4ec}.tsv{background:#f0f4ff}
+.tph{background:#f4f4f4}.tac{background:#f5eeff}
+
+.ctag{position:absolute;top:9px;left:9px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:50px;letter-spacing:.3px;text-transform:uppercase}
+.ftag{background:var(--gl);color:var(--gd)}
+.ttag{background:var(--ol);color:var(--od)}
+
+.cb{padding:12px 13px;flex:1;display:flex;flex-direction:column;gap:4px}
+.cn{font-size:13px;font-weight:700;color:var(--ink);line-height:1.35}
+.cd{font-size:11px;color:var(--mu);line-height:1.5;flex:1}
+.cp{font-size:15px;font-weight:800;margin-top:5px}
+.fp{color:var(--g)}.tp2{color:var(--o)}.cup{color:var(--mu);font-size:12px;font-weight:600}
+
+.cf{padding:0 13px 13px}
+.ab{width:100%;padding:9px 0;border:none;border-radius:var(--rx);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .14s}
+.fa2{background:var(--gl);color:var(--g)}.fa2:hover{background:var(--g);color:#fff}
+.ta2{background:var(--ol);color:var(--o)}.ta2:hover{background:var(--o);color:#fff}
+
+.qr{display:flex;border-radius:var(--rx);overflow:hidden;border:1.5px solid;height:37px}
+.qr.fq{border-color:var(--g)}.qr.tq{border-color:var(--o)}
+.qb{flex:1;background:none;border:none;font-size:18px;font-weight:700;cursor:pointer;transition:background .1s}
+.fq .qb{color:var(--g)}.fq .qb:hover{background:var(--gl)}
+.tq .qb{color:var(--o)}.tq .qb:hover{background:var(--ol)}
+.qn{flex:1.3;text-align:center;font-size:14px;font-weight:700;line-height:37px}
+
+.nores{text-align:center;padding:48px;color:var(--mu);font-size:14px}
+
+.contact{margin-top:38px;background:var(--wh);border-radius:var(--r);border:1px solid var(--bd);padding:26px;box-shadow:var(--cs)}
+.contact h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.contact .sub{font-size:13px;color:var(--mu);margin-bottom:18px}
+.ig{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:9px;margin-bottom:18px}
+.ic{background:var(--bg);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 14px;display:flex;align-items:flex-start;gap:9px}
+.ic-i{font-size:17px;flex-shrink:0;margin-top:1px}
+.ic-l{font-size:10px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.ic-v{font-size:12px;font-weight:500;color:var(--ink);line-height:1.4}
+.ctar{display:flex;gap:8px;flex-wrap:wrap}
+.cta{display:flex;align-items:center;gap:7px;padding:10px 17px;border-radius:var(--rx);border:none;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .15s}
+.cta:hover{opacity:.9;transform:translateY(-1px)}
+.wa2{background:var(--wa);color:#fff}
+.ph{background:#1d4ed8;color:#fff}
+.or{background:var(--ink);color:#fff}
+
+.ov{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.4)}
+.ov.on{display:block}
+.dr{position:fixed;top:0;right:-100%;bottom:0;width:min(400px,100vw);background:var(--wh);z-index:201;transition:right .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;border-left:1px solid var(--bd)}
+.dr.on{right:0}
+.drhd{padding:17px 19px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd);flex-shrink:0}
+.drhd h3{font-size:15px;font-weight:700}
+.dcl{background:var(--bg);border:1px solid var(--bd);color:var(--ink);border-radius:var(--rx);width:31px;height:31px;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.drbd{flex:1;overflow-y:auto;padding:14px}
+.ec{text-align:center;padding:50px 0;color:var(--mu)}
+.ec .ei{font-size:50px;margin-bottom:10px}
+.ec p{font-size:14px;font-weight:500}
+.crit{display:flex;gap:11px;align-items:center;padding:12px 0;border-bottom:1px solid var(--bg)}
+.cri{font-size:27px;width:40px;text-align:center;flex-shrink:0}
+.crd{flex:1;min-width:0}
+.crn{font-size:13px;font-weight:600}
+.crp{font-size:12px;color:var(--mu);margin-top:2px}
+.crq{display:flex;align-items:center;gap:7px;margin-top:7px}
+.crq button{background:var(--bg);border:1px solid var(--bd);border-radius:var(--rx);width:27px;height:27px;font-size:14px;font-weight:700;cursor:pointer}
+.crq span{font-size:14px;font-weight:700;min-width:22px;text-align:center}
+.crdl{background:none;border:none;font-size:16px;cursor:pointer;color:var(--red);flex-shrink:0}
+.drft{padding:15px;border-top:1px solid var(--bd);background:var(--bg);flex-shrink:0}
+.totrow{display:flex;justify-content:space-between;font-size:15px;font-weight:700;margin-bottom:12px}
+.cob{width:100%;padding:13px;background:var(--wa);color:#fff;border:none;border-radius:var(--rs);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s}
+.cob:hover{opacity:.92}
+
+.mbg{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:15px}
+.mbg.on{display:flex}
+.modal{background:var(--wh);border-radius:16px;width:100%;max-width:476px;box-shadow:var(--shl);overflow:hidden;animation:pop .22s ease}
+@keyframes pop{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
+.mhd{padding:17px 21px;display:flex;justify-content:space-between;align-items:center}
+.mhd.fh{background:var(--g)}.mhd.th{background:var(--o)}
+.mhd h3{color:#fff;font-size:15px;font-weight:700}
+.mcl{background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:6px;width:29px;height:29px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mbd{padding:21px;max-height:68vh;overflow-y:auto}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:11px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.fg input,.fg textarea{width:100%;padding:10px 13px;border:1px solid var(--bd);border-radius:var(--rx);font-family:inherit;font-size:14px;outline:none;background:var(--bg);transition:border-color .18s;color:var(--ink)}
+.fg input:focus,.fg textarea:focus{border-color:var(--g);background:var(--wh)}
+.fg textarea{resize:vertical;min-height:86px}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+@media(max-width:360px){.fg2{grid-template-columns:1fr}}
+.sendb{width:100%;padding:13px;background:var(--wa);color:#fff;border:none;border-radius:var(--rs);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:5px;transition:opacity .15s}
+.sendb:hover{opacity:.92}
+
+.floatb{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--wh);border:none;border-radius:50px;padding:12px 26px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;z-index:30;box-shadow:0 4px 18px rgba(17,24,39,.28);display:flex;align-items:center;gap:8px;white-space:nowrap;transition:transform .15s,box-shadow .15s}
+.floatb:hover{transform:translateX(-50%) translateY(-2px);box-shadow:0 6px 26px rgba(17,24,39,.38)}
+
+#toast{position:fixed;bottom:74px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--wh);padding:10px 22px;border-radius:50px;font-size:13px;font-weight:600;z-index:500;opacity:0;pointer-events:none;transition:opacity .22s;white-space:nowrap;max-width:90vw;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#toast.show{opacity:1}
+
+@media(max-width:600px){
+  .store-hd,.contact{padding:15px}
+  .shd-stats{width:100%}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="logo" href="#">
+    <div class="logo-icon">🛒</div>
+    <div>
+      <div class="logo-name">Ronkies &amp; Emmy Enterprises</div>
+      <div class="logo-loc">📍 Ayegun Oleyo, Ibadan</div>
+    </div>
+  </a>
+  <button class="cart-btn" onclick="openCart()">🛒 Cart <span class="cnum" id="cart-count">0</span></button>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">📍 No 3 Olorunsogo Estate, Ibadan — Order Online</div>
+  <h1>Fresh Food &amp; <span class="hi">Top Tech</span><br>Delivered to You</h1>
+  <p class="hero-sub">Shop groceries and gadgets from two trusted stores — fast and easy</p>
+  <div class="chips">
+    <span class="chip">📞 0907 220 6274</span>
+    <span class="chip hi">💬 WhatsApp Orders</span>
+    <span class="chip">🚚 Home Delivery</span>
+    <span class="chip">🔄 Phone Exchange</span>
+    <span class="chip">💳 POS Setup</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab af" id="tab-food" onclick="showSec('food',this)">🥦 Ronkies Food Mart</button>
+  <button class="tab" id="tab-tech" onclick="showSec('tech',this)">📱 Emmy Enterprises</button>
+</div>
+
+<div class="main">
+
+  <div class="sec on" id="sec-food">
+    <div class="store-hd">
+      <div class="shd-l">
+        <div class="shd-icon fi">🥦</div>
+        <div>
+          <div class="shd-name">Ronkies Food Mart</div>
+          <div class="shd-desc">Fresh foodstuffs &amp; groceries — quality you can trust</div>
+        </div>
+      </div>
+      <div class="shd-stats">
+        <div class="sp"><strong>25+</strong><span>Items</span></div>
+        <div class="sp"><strong>Fresh</strong><span>Daily</span></div>
+      </div>
+    </div>
+    <div class="sw"><span class="si">🔍</span><input type="text" placeholder="Search groceries…" oninput="filterQ('food',this.value)"></div>
+    <div class="filt" id="food-filt"></div>
+    <div class="grid" id="food-grid"></div>
+    <div id="food-empty" class="nores" style="display:none">No items found</div>
+    <div class="contact">
+      <h3>Contact Ronkies Food Mart</h3>
+      <p class="sub">Reach us via WhatsApp or by phone — happy to help anytime</p>
+      <div class="ig">
+        <div class="ic"><span class="ic-i">📍</span><div><div class="ic-l">Location</div><div class="ic-v">No 3, Olorunsogo Estate<br>Ayegun Oleyo, Ibadan</div></div></div>
+        <div class="ic"><span class="ic-i">📞</span><div><div class="ic-l">Phone</div><div class="ic-v">0907 220 6274<br>0704 056 7349</div></div></div>
+        <div class="ic"><span class="ic-i">🕐</span><div><div class="ic-l">Opening Hours</div><div class="ic-v">Mon–Sat: 8am – 8pm<br></div></div></div>
+      </div>
+      <div class="ctar">
+        <button class="cta wa2" onclick="openWA('09072206274','Ronkies Food Mart')">💬 WhatsApp</button>
+        <button class="cta ph" onclick="dial('09072206274')">📞 Call Now</button>
+        <button class="cta or" onclick="openOrder('food')">📦 Order Online</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" id="sec-tech">
+    <div class="store-hd">
+      <div class="shd-l">
+        <div class="shd-icon ti">📱</div>
+        <div>
+          <div class="shd-name">Emmy Enterprises</div>
+          <div class="shd-desc">POS · Phone Sales · Accessories · Repairs · Exchange</div>
+        </div>
+      </div>
+      <div class="shd-stats">
+        <div class="sp"><strong>18+</strong><span>Products</span></div>
+        <div class="sp"><strong>Best</strong><span>Prices</span></div>
+      </div>
+    </div>
+    <div class="sw"><span class="si">🔍</span><input type="text" class="t" placeholder="Search phones &amp; accessories…" oninput="filterQ('tech',this.value)"></div>
+    <div class="filt" id="tech-filt"></div>
+    <div class="grid" id="tech-grid"></div>
+    <div id="tech-empty" class="nores" style="display:none">No items found</div>
+    <div class="contact">
+      <h3>Contact Emmy Enterprises</h3>
+      <p class="sub">Visit us or reach out on WhatsApp — we make tech simple</p>
+      <div class="ig">
+        <div class="ic"><span class="ic-i">📍</span><div><div class="ic-l">Location</div><div class="ic-v">No 3, Olorunsogo Estate<br>Ayegun Oleyo, Ibadan</div></div></div>
+        <div class="ic"><span class="ic-i">📞</span><div><div class="ic-l">Phone</div><div class="ic-v">0907 220 6274<br>0704 056 7349</div></div></div>
+        <div class="ic"><span class="ic-i">🔄</span><div><div class="ic-l">Services</div><div class="ic-v">Exchange · Repairs<br>POS Setup · Buyback</div></div></div>
+      </div>
+      <div class="ctar">
+        <button class="cta wa2" onclick="openWA('09072206274','Emmy Enterprises')">💬 WhatsApp</button>
+        <button class="cta ph" onclick="dial('09072206274')">📞 Call Now</button>
+        <button class="cta or" onclick="openOrder('tech')">📦 Order Online</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="floatb" id="floatb" onclick="openOrder('food')">📦 Place Order Now</button>
+
+<div class="ov" id="cart-ov" onclick="closeCart()"></div>
+<div class="dr" id="cart-dr">
+  <div class="drhd"><h3>🛒 Your Cart</h3><button class="dcl" onclick="closeCart()">×</button></div>
+  <div class="drbd" id="cart-bd"></div>
+  <div class="drft" id="cart-ft" style="display:none">
+    <div class="totrow"><span>Total</span><span id="cart-total">₦0</span></div>
+    <button class="cob" onclick="checkoutWA()">💬 Checkout via WhatsApp</button>
+  </div>
+</div>
+
+<div class="mbg" id="order-modal" onclick="if(event.target===this)closeOrder()">
+  <div class="modal">
+    <div class="mhd fh" id="modal-hd">
+      <h3 id="modal-title">📦 Place Your Order</h3>
+      <button class="mcl" onclick="closeOrder()">×</button>
+    </div>
+    <div class="mbd">
+      <div class="fg2">
+        <div class="fg"><label>Full Name *</label><input type="text" id="o-name" placeholder="Your name"></div>
+        <div class="fg"><label>Phone *</label><input type="tel" id="o-phone" placeholder="080xxxxxxxx"></div>
+      </div>
+      <div class="fg"><label>Delivery Address</label><input type="text" id="o-addr" placeholder="Street, area, Ibadan"></div>
+      <div class="fg"><label>Items to Order *</label><textarea id="o-items" placeholder="e.g. Rice 1 bag, Garri 2kg&#10;List all items and quantities"></textarea></div>
+      <div class="fg"><label>Special Instructions</label><input type="text" id="o-note" placeholder="Any notes or preferences?"></div>
+      <button class="sendb" onclick="submitOrder()">💬 Send Order via WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const FOOD=[
+  {icon:'🌾',name:'Garri (Ijebu)',cat:'Grains',price:2500,unit:'bag',desc:'White & yellow Ijebu garri, freshly processed',th:'tg'},
+  {icon:'🍚',name:'Rice (50kg bag)',cat:'Grains',price:85000,unit:'bag',desc:'Long-grain parboiled rice, great for all meals',th:'tg'},
+  {icon:'🌽',name:'Corn Flour (Ogi)',cat:'Grains',price:1800,unit:'pack',desc:'Smooth corn pap for breakfast or weaning',th:'tg'},
+  {icon:'🫘',name:'Brown Beans',cat:'Grains',price:4000,unit:'paint',desc:'Quality honey & brown beans, clean sorted',th:'tg'},
+  {icon:'🌾',name:'Semovita (1kg)',cat:'Grains',price:1500,unit:'pack',desc:'Fine semolina swallow for soups & stews',th:'tg'},
+  {icon:'🥚',name:'Eggs (Crate 30)',cat:'Protein',price:4500,unit:'crate',desc:'Farm-fresh large eggs, 30 per crate',th:'tp'},
+  {icon:'🐟',name:'Smoked Fish',cat:'Protein',price:2000,unit:'wrap',desc:'Aromatic smoked catfish for your stews',th:'tp'},
+  {icon:'🦐',name:'Crayfish (cup)',cat:'Protein',price:800,unit:'cup',desc:'Sun-dried ground crayfish for rich flavour',th:'tp'},
+  {icon:'🐠',name:'Stock Fish',cat:'Protein',price:3500,unit:'piece',desc:'Premium dried stockfish, softens beautifully',th:'tp'},
+  {icon:'🛢️',name:'Palm Oil (25L)',cat:'Oils',price:18000,unit:'keg',desc:'Pure unrefined red palm oil from Edo State',th:'to'},
+  {icon:'🧴',name:'Vegetable Oil (3L)',cat:'Oils',price:4800,unit:'bottle',desc:'Clear refined vegetable oil, low cholesterol',th:'to'},
+  {icon:'🥜',name:'Groundnut Oil (4L)',cat:'Oils',price:6500,unit:'bottle',desc:'Cold-pressed groundnut oil, deep roasted aroma',th:'to'},
+  {icon:'🧅',name:'Onions (medium bag)',cat:'Veggies',price:7000,unit:'bag',desc:'Red Sokoto onions, pungent & sweet flavour',th:'tv'},
+  {icon:'🍅',name:'Tomatoes (basket)',cat:'Veggies',price:5500,unit:'basket',desc:'Fresh plum tomatoes for stew & jollof rice',th:'tv'},
+  {icon:'🫑',name:'Tatashe Pepper',cat:'Veggies',price:2500,unit:'basket',desc:'Sweet red bell pepper for colour & taste',th:'tv'},
+  {icon:'🌿',name:'Ugwu Leaves',cat:'Veggies',price:300,unit:'bunch',desc:'Tender fluted pumpkin leaves, iron-rich',th:'tv'},
+  {icon:'🧄',name:'Garlic (pack)',cat:'Veggies',price:600,unit:'pack',desc:'Aromatic fresh garlic cloves',th:'tv'},
+  {icon:'🥬',name:'Efo Riro Leaves',cat:'Veggies',price:400,unit:'wrap',desc:'Fresh shredded efo for riro or egusi soup',th:'tv'},
+  {icon:'🧂',name:'Seasoning Cubes',cat:'Spices',price:500,unit:'pack',desc:'Maggi & Knorr cubes, 50-pack variety bundle',th:'ts'},
+  {icon:'🌶️',name:'Ground Pepper',cat:'Spices',price:700,unit:'bottle',desc:'Hot chilli & tatashe blend, deep red',th:'ts'},
+  {icon:'🫙',name:'Curry & Thyme Set',cat:'Spices',price:600,unit:'set',desc:'Aromatic curry powder & dried thyme combo',th:'ts'},
+  {icon:'🧈',name:'Butter (250g)',cat:'Dairy',price:1800,unit:'pack',desc:'Creamy unsalted butter for baking & cooking',th:'td'},
+  {icon:'🥛',name:'Peak Milk (tin)',cat:'Dairy',price:2200,unit:'tin',desc:'Full-cream evaporated milk, rich & nutritious',th:'td'},
+  {icon:'🍞',name:'Bread Loaf',cat:'Bakery',price:700,unit:'loaf',desc:'Soft sliced white bread, freshly baked daily',th:'tb'},
+  {icon:'🍝',name:'Spaghetti (pack)',cat:'Pasta',price:1200,unit:'pack',desc:'Golden Penny spaghetti, 500g per pack',th:'tpa'},
+];
+const TECH=[
+  {icon:'💳',name:'POS Terminal Setup',cat:'Services',price:0,th:'tsv',desc:'Full setup, activation & training included'},
+  {icon:'🔄',name:'Phone Exchange',cat:'Services',price:0,th:'tsv',desc:'Swap your old device — fair valuation'},
+  {icon:'💰',name:'Sell Your Phone',cat:'Services',price:0,th:'tsv',desc:'Instant cash — best buy-back rates in Ibadan'},
+  {icon:'🛠️',name:'Phone Repair',cat:'Services',price:0,th:'tsv',desc:'Screen, battery, charging port & software fixes'},
+  {icon:'📲',name:'Tecno Spark 20',cat:'Phones',price:95000,th:'tph',desc:'6.6" display · 128GB · 5000mAh · Dual SIM'},
+  {icon:'📱',name:'Infinix Hot 40',cat:'Phones',price:78000,th:'tph',desc:'6.78" 90Hz · 256GB · 5000mAh battery'},
+  {icon:'📟',name:'Samsung Galaxy A15',cat:'Phones',price:110000,th:'tph',desc:'6.5" AMOLED · 128GB · 5000mAh · Triple cam'},
+  {icon:'📱',name:'Tecno Camon 20',cat:'Phones',price:130000,th:'tph',desc:'108MP camera · 8GB RAM · 6.67" AMOLED'},
+  {icon:'📱',name:'Itel A70',cat:'Phones',price:42000,th:'tph',desc:'Budget powerhouse · 5000mAh · Android 13 Go'},
+  {icon:'📱',name:'Infinix Smart 8',cat:'Phones',price:55000,th:'tph',desc:'6.6" HD+ · 64GB · Dual SIM · Android 13'},
+  {icon:'🎧',name:'Bluetooth Earbuds',cat:'Accessories',price:6500,th:'tac',desc:'True wireless · noise-cancelling · 6hr play'},
+  {icon:'🔋',name:'Power Bank 20000mAh',cat:'Accessories',price:12000,th:'tac',desc:'Fast charge · dual USB-C & USB-A output'},
+  {icon:'🔌',name:'USB-C Fast Charger',cat:'Accessories',price:2500,th:'tac',desc:'65W GaN adapter, compact travel size'},
+  {icon:'🛡️',name:'Tempered Glass',cat:'Accessories',price:1500,th:'tac',desc:'9H hardness · anti-glare screen protector'},
+  {icon:'📦',name:'Phone Back Cover',cat:'Accessories',price:2000,th:'tac',desc:'Military-grade shockproof silicone case'},
+  {icon:'🔊',name:'Bluetooth Speaker',cat:'Accessories',price:9500,th:'tac',desc:'Waterproof IPX5 · 8hr playtime · deep bass'},
+  {icon:'💡',name:'LED Earphones',cat:'Accessories',price:3500,th:'tac',desc:'Wired · heavy bass driver · RGB LED wire'},
+  {icon:'🖥️',name:'Phone Holder/Stand',cat:'Accessories',price:2200,th:'tac',desc:'Adjustable desk mount · 360° rotation'},
+];
+
+let cart=[];
+let curO='food';
+const fmt=n=>n>0?'₦'+n.toLocaleString():'Contact Us';
+const items=t=>t==='food'?FOOD:TECH;
+
+function buildF(data,id,type){
+  const cats=['All',...new Set(data.map(i=>i.cat))];
+  document.getElementById(id).innerHTML=cats.map((c,i)=>`<button class="pill ${i===0?(type==='tech'?'ta':'fa'):''}" onclick="fcat('${type}','${c}',this)">${c}</button>`).join('');
+}
+
+function rGrid(data,gid,type){
+  const el=document.getElementById(gid),em=document.getElementById(type+'-empty');
+  if(!data.length){el.innerHTML='';em.style.display='block';return;}
+  em.style.display='none';
+  const iT=type==='tech';
+  el.innerHTML=data.map(item=>{
+    const ci=cart.find(c=>c.key===type+'||'+item.name);
+    const qty=ci?ci.qty:0;
+    const cid='ctl-'+type+'-'+item.name.replace(/\W/g,'_');
+    const pc=item.price===0?'cup':(iT?'tp2':'fp');
+    return `<div class="card">
+      <div class="thumb ${item.th}">${item.icon}<span class="ctag ${iT?'ttag':'ftag'}">${item.cat}</span></div>
+      <div class="cb">
+        <div class="cn">${item.name}</div>
+        <div class="cd">${item.desc||''}</div>
+        <div class="cp ${pc}">${fmt(item.price)}</div>
+      </div>
+      <div class="cf" id="${cid}">
+        ${qty===0
+          ?`<button class="ab ${iT?'ta2':'fa2'}" onclick="addI('${type}','${item.name}')">+ Add to Cart</button>`
+          :`<div class="qr ${iT?'tq':'fq'}"><button class="qb" onclick="chQ('${type}','${item.name}',-1)">−</button><span class="qn">${qty}</span><button class="qb" onclick="chQ('${type}','${item.name}',1)">+</button></div>`
+        }
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function fcat(type,cat,btn){
+  document.querySelectorAll('#'+type+'-filt .pill').forEach(b=>b.classList.remove('fa','ta'));
+  btn.classList.add(type==='tech'?'ta':'fa');
+  rGrid(cat==='All'?items(type):items(type).filter(i=>i.cat===cat),type+'-grid',type);
+}
+function filterQ(type,q){
+  q=q.toLowerCase();
+  const f=q?items(type).filter(i=>i.name.toLowerCase().includes(q)||i.cat.toLowerCase().includes(q)):items(type);
+  document.querySelectorAll('#'+type+'-filt .pill').forEach((b,i)=>{b.classList.remove('fa','ta');if(i===0)b.classList.add(type==='tech'?'ta':'fa');});
+  rGrid(f,type+'-grid',type);
+}
+
+function addI(type,name){
+  const item=items(type).find(i=>i.name===name);if(!item)return;
+  const key=type+'||'+name,ex=cart.find(c=>c.key===key);
+  if(ex){ex.qty++;}else{cart.push({key,type,name,icon:item.icon,price:item.price,qty:1});}
+  updC();updCtrl(type,name);
+  toast('✓ '+name.split('(')[0].trim()+' added');
+}
+function chQ(type,name,d){
+  const key=type+'||'+name,idx=cart.findIndex(c=>c.key===key);if(idx===-1)return;
+  cart[idx].qty+=d;if(cart[idx].qty<=0)cart.splice(idx,1);
+  updC();updCtrl(type,name);
+  if(document.getElementById('cart-dr').classList.contains('on'))rCart();
+}
+function updCtrl(type,name){
+  const el=document.getElementById('ctl-'+type+'-'+name.replace(/\W/g,'_'));if(!el)return;
+  const ci=cart.find(c=>c.key===type+'||'+name),qty=ci?ci.qty:0,iT=type==='tech';
+  el.innerHTML=qty===0
+    ?`<button class="ab ${iT?'ta2':'fa2'}" onclick="addI('${type}','${name}')">+ Add to Cart</button>`
+    :`<div class="qr ${iT?'tq':'fq'}"><button class="qb" onclick="chQ('${type}','${name}',-1)">−</button><span class="qn">${qty}</span><button class="qb" onclick="chQ('${type}','${name}',1)">+</button></div>`;
+}
+function updC(){document.getElementById('cart-count').textContent=cart.reduce((s,c)=>s+c.qty,0);}
+
+function openCart(){document.getElementById('cart-ov').classList.add('on');document.getElementById('cart-dr').classList.add('on');rCart();}
+function closeCart(){document.getElementById('cart-ov').classList.remove('on');document.getElementById('cart-dr').classList.remove('on');}
+function rCart(){
+  const bd=document.getElementById('cart-bd'),ft=document.getElementById('cart-ft');
+  if(!cart.length){bd.innerHTML='<div class="ec"><div class="ei">🛒</div><p>Your cart is empty</p></div>';ft.style.display='none';return;}
+  let tot=0;
+  bd.innerHTML=cart.map(c=>{tot+=c.price*c.qty;return`<div class="crit">
+    <div class="cri">${c.icon}</div>
+    <div class="crd">
+      <div class="crn">${c.name}</div>
+      <div class="crp">${c.price>0?fmt(c.price)+' each':'Price on request'}</div>
+      <div class="crq"><button onclick="chQ('${c.type}','${c.name}',-1);rCart()">−</button><span>${c.qty}</span><button onclick="chQ('${c.type}','${c.name}',1);rCart()">+</button></div>
+    </div>
+    <button class="crdl" onclick="remI('${c.key}')">🗑</button>
+  </div>`;}).join('');
+  document.getElementById('cart-total').textContent=tot>0?fmt(tot):'Price on request';
+  ft.style.display='block';
+}
+function remI(key){const c=cart.find(x=>x.key===key);if(c){cart=cart.filter(x=>x.key!==key);updCtrl(c.type,c.name);}updC();rCart();}
+function checkoutWA(){
+  if(!cart.length)return;
+  let msg='🛒 *New Order*\n\n';
+  cart.forEach(c=>{msg+=`• ${c.icon} ${c.name} × ${c.qty}${c.price>0?' — '+fmt(c.price*c.qty):''}\n`;});
+  const tot=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  if(tot>0)msg+=`\n💰 *Total: ${fmt(tot)}*`;
+  msg+='\n\nPlease confirm and arrange delivery. Thank you! 🙏';
+  window.open('https://wa.me/2349072206274?text='+encodeURIComponent(msg));
+}
+
+function openOrder(type){
+  curO=type;const iT=type==='tech';
+  document.getElementById('modal-hd').className='mhd '+(iT?'th':'fh');
+  document.getElementById('modal-title').textContent=iT?'📱 Order from Emmy Enterprises':'🥦 Order from Ronkies Food Mart';
+  const fc=cart.filter(c=>c.type===type);
+  document.getElementById('o-items').value=fc.length?fc.map(c=>`${c.name} × ${c.qty}`).join('\n'):'';
+  document.getElementById('order-modal').classList.add('on');
+}
+function closeOrder(){document.getElementById('order-modal').classList.remove('on');}
+function submitOrder(){
+  const name=document.getElementById('o-name').value.trim();
+  const phone=document.getElementById('o-phone').value.trim();
+  const itms=document.getElementById('o-items').value.trim();
+  if(!name||!phone||!itms){toast('⚠️ Please fill Name, Phone & Items');return;}
+  const addr=document.getElementById('o-addr').value.trim();
+  const note=document.getElementById('o-note').value.trim();
+  const store=curO==='tech'?'Emmy Enterprises':'Ronkies Food Mart';
+  let msg=`📦 *Order — ${store}*\n\n👤 ${name}\n📞 ${phone}`;
+  if(addr)msg+=`\n📍 ${addr}`;
+  msg+=`\n\n🛍 *Items:*\n${itms}`;
+  if(note)msg+=`\n\n📝 ${note}`;
+  msg+='\n\nPlease confirm and arrange delivery. Thank you! 🙏';
+  window.open('https://wa.me/2349072206274?text='+encodeURIComponent(msg));
+  closeOrder();toast('✅ Order sent!');
+}
+
+function openWA(num,store){window.open('https://wa.me/234'+num.replace(/^0/,'')+'?text='+encodeURIComponent('Hello '+store+'! 👋 I found you online and I\'d like to enquire. Please assist me.'));}
+function dial(num){window.location.href='tel:+234'+num.replace(/^0/,'');}
+function showSec(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('af','at'));
+  document.getElementById('sec-'+id).classList.add('on');
+  btn.classList.add(id==='tech'?'at':'af');
+  const fb=document.getElementById('floatb');
+  fb.textContent=id==='tech'?'📱 Order from Emmy':'📦 Place Food Order';
+  fb.onclick=()=>openOrder(id);
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2400);}
+
+buildF(FOOD,'food-filt','food');
+buildF(TECH,'tech-filt','tech');
+rGrid(FOOD,'food-grid','food');
+rGrid(TECH,'tech-grid','tech');
+</script>
+</body>
+</html>
